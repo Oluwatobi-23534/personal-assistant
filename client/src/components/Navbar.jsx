@@ -9,7 +9,7 @@ const Navbar = () => {
     <header>
         <h3>E-Assistant</h3>
         <nav>
-            <Link to='/auth'>
+            <Link to='/signin'>
             <Button type="primary">Sign In</Button>
             </Link>
         </nav>

@@ -1,13 +1,15 @@
 // SignUp.js
 import { useState } from "react";
 import { toast } from "react-toastify";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import "./css/signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Add state to toggle password visibility
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,18 +28,18 @@ const SignUp = () => {
       });
       const data = await res.json();
       setLoading(false);
-      if (!res.ok) { // If the response status is not ok (not 2xx)
+      if (!res.ok) {
+        // If the response status is not ok (not 2xx)
         toast.error(data.message); // Show the error message from the server
         return;
       }
+      navigate('/signin')
       toast.success("Signup successful!"); // Optionally, show a success message
     } catch (error) {
       setLoading(false);
       toast.error("An error occurred. Please try again."); // Show a generic error message
     }
   };
-  
-  
 
   return (
     <div className="container">
@@ -68,31 +70,51 @@ const SignUp = () => {
             placeholder="Enter your email"
           />
         </label>
+
         <label>
           Password
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            placeholder="Enter your password"
-          />
+          <div className="password-input">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+            />
+            <i
+              onClick={() => setShowPassword(!showPassword)}
+              style={{ color: "black" }}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </i>
+          </div>
         </label>
         <label>
           Confirm Password
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            placeholder="Confirm your password"
-          />
+          <div className="password-input">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              placeholder="Confirm your password"
+            />
+            <i
+              onClick={() => setShowPassword(!showPassword)}
+              style={{ color: "black" }}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </i>
+          </div>
         </label>
-        <button disabled={loading} type="submit">{loading ? 'Loading...' : 'Register'}</button>
+
+        <button disabled={loading} type="submit">
+          {loading ? "Loading..." : "Register"}
+        </button>
         <p className="login-link">
-          Already a user? <Link to='/signin'>Log in</Link> 
+          Already a user? <Link to="/signin">Log in</Link>
         </p>
       </form>
     </div>
