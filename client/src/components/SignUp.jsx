@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 import "./css/signup.css";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -91,7 +92,7 @@ const SignUp = () => {
         </label>
         <button disabled={loading} type="submit">{loading ? 'Loading...' : 'Register'}</button>
         <p className="login-link">
-          Already a user? <a href="/login">Log in</a>
+          Already a user? <Link to='/signin'>Log in</Link> 
         </p>
       </form>
     </div>
