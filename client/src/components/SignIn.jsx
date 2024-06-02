@@ -3,15 +3,18 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { signInStart, signInSuccess, signInFailure } from "../slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 
 import "./css/signin.css";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const { loading } = useSelector((state) => state.user);
   const [showPassword, setShowPassword] = useState(false); // Add state to toggle password visibility
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,7 +23,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -29,18 +32,20 @@ const SignIn = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      setLoading(false);
       if (!res.ok) {
+        dispatch(signInFailure(data.message)); 
         toast.error(data.message);
         return;
       }
-      navigate('/')
+      dispatch(signInSuccess(data)); // Pass the user data as the payload
+      navigate("/");
       toast.success("Signin successful!");
     } catch (error) {
-      setLoading(false);
+      dispatch(signInFailure(error.toString())); // Dispatch signInFailure with the client error message
       toast.error("An error occurred. Please try again.");
     }
   };
+
 
   return (
     <div className="container">
@@ -71,14 +76,22 @@ const SignIn = () => {
               required
               placeholder="Enter your password"
             />
-            <i onClick={() => setShowPassword(!showPassword)} style={{ color: 'black' }}> {/* Add onClick handler to toggle state */}
-              {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Change icon based on state */}
+            <i
+              onClick={() => setShowPassword(!showPassword)}
+              style={{ color: "black" }}
+            >
+              {" "}
+              {/* Add onClick handler to toggle state */}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}{" "}
+              {/* Change icon based on state */}
             </i>
           </div>
         </label>
-        <button disabled={loading} type="submit">{loading ? 'Loading...' : 'Sign In'}</button>
+        <button disabled={loading} type="submit">
+          {loading ? "Loading..." : "Sign In"}
+        </button>
         <p className="signup-link">
-          New user? <Link to='/signup'>Sign up</Link> 
+          New user? <Link to="/signup">Sign up</Link>
         </p>
       </form>
     </div>

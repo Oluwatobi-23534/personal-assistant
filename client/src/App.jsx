@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Authenticate from "./components/Authenticate";
 import SignUp from "./components/SignUp";
 import './App.css';
 import { ToastContainer } from "react-toastify";
