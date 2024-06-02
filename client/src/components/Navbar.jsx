@@ -6,16 +6,19 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
 
-  
   return (
     <header>
-      <Link to='/'>
+      <Link to="/">
         <h3>E-Assistant</h3>
       </Link>
 
       <nav>
-        <Link to="/signin">
-          <Button type="primary">Sign In</Button>
+        <Link to="/profile">
+          {currentUser ? (
+            <img src={currentUser.profilePicture} alt="profile" className="h-7 w-7 rounded-full object-cover" />
+          ) : (
+            <Button type="primary">Sign In</Button>
+          )}
         </Link>
       </nav>
     </header>

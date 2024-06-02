@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 * {
@@ -9,6 +9,6 @@
 body {
   background-color: #2a2a2a;
   color: #fff;
-  font-family: "Cabin Condensed", sans-serif;
+  font-family: "Jost", sans-serif;
   font-weight: 400;
 }

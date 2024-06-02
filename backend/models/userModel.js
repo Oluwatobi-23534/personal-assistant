@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    porfilePicture: {
+    profilePicture: {
       type: String,
       default:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGdAOWdZSbW8kVEqzA2noZPKVaMCZZZZ2tpA&s",
