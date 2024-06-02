@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import "./css/signup.css";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../pages/OAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -113,6 +114,7 @@ const SignUp = () => {
         <button disabled={loading} type="submit">
           {loading ? "Loading..." : "Register"}
         </button>
+        <OAuth/>
         <p className="login-link">
           Already a user? <Link to="/signin">Log in</Link>
         </p>

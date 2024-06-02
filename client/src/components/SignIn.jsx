@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 
 import "./css/signin.css";
+import OAuth from "../pages/OAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -90,6 +91,7 @@ const SignIn = () => {
         <button disabled={loading} type="submit">
           {loading ? "Loading..." : "Sign In"}
         </button>
+        <OAuth/>
         <p className="signup-link">
           New user? <Link to="/signup">Sign up</Link>
         </p>
