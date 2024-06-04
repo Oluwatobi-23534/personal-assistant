@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <header>
       <Link to="/">
-        <h3>E-Assistant</h3>
+        <h3>Within Aide</h3>
       </Link>
 
       <nav>
