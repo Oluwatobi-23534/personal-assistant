@@ -5,6 +5,9 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserStart,
+  deleteUserFailure,
+  deleteUserSuccess,
 } from "../slices/userSlice";
 import {
   getDownloadURL,
@@ -78,6 +81,23 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error));
+    }
+  };
+
   return (
     <div className="p-20  max-w-lg mx-auto">
       <h1 className="text-white text-3xl text-center">Profile</h1>
@@ -136,7 +156,13 @@ const Profile = () => {
         </button>
       </form>
       <div className="flex justify-between mt-4">
-        <span className="text-red-800 cursor-pointer"> Delete Account</span>
+        <span
+          className="text-red-800 cursor-pointer"
+          onClick={handleDeleteAccount}
+        >
+          {" "}
+          Delete Account
+        </span>
         <span className="text-red-800 cursor-pointer"> Sign Out</span>
       </div>
       <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
