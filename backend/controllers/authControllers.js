@@ -7,7 +7,6 @@ function isDefaultProfilePic(url) {
   return url.endsWith("s96-c/photo.jpg");
 }
 
-
 // Signup Controller
 export const signup = async (req, res, next) => {
   const { username, email, password, confirmPassword } = req.body;
@@ -124,8 +123,6 @@ export const google = async (req, res, next) => {
   }
 };
 
-
-
-
-
-
+export const signout = (req, res) => {
+  res.clearCookie("access-token").status(200).json("Signout successful");
+};
